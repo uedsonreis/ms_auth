@@ -19,10 +19,8 @@ class __UserService(AbstractService):
         user_db = self.get_by_username(record.username)
         return False if user_db is None else True
 
-    def update(self, id: int, user: User):
-        to_save = User(id, user.name, None, None)
-        to_save.admin = None
-        return self._get_repository().save(to_save)
+    def _map_to_update(self, new_record: User, record_db: User):
+        record_db.name = new_record.name
 
 
 userService = __UserService()

@@ -1,8 +1,9 @@
+from sqlalchemy.inspection import inspect
 from settings import db
 from sqlalchemy.sql import func
 
 
-class User(db.Model):
+class User(db.Model, object):
 
     __tablename__ = 'users'
 
@@ -24,3 +25,8 @@ class User(db.Model):
         self.username = username
         self.password = password
         self.admin = False
+
+    def serialize(self):
+        obj = {c: getattr(self, c) for c in inspect(self).attrs.keys()}
+        del obj['password']
+        return obj
