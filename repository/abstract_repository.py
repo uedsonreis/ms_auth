@@ -5,14 +5,14 @@ from settings import db
 class AbstractRepository(ABC):
 
     @abstractmethod
-    def get_query(self):
+    def get_model(self) -> db.Model:
         pass
 
     def find(self):
-        return self.get_query().all()
+        return self.get_model().query.all()
 
     def get(self, id: int):
-        record = self.get_query().get(id)
+        record = self.get_model().query.get(id)
         if record is None:
             return None
         else:

@@ -25,29 +25,30 @@ class UserController(AbstractController):
         )
 
 
+PATH = '/users'
 controller = UserController()
 
 
-@app.get('/users')
+@app.get(PATH)
 def index():
     return controller.index()
 
 
-@app.get('/users/<int:id>')
-def get(id):
+@app.get(PATH+'/<int:id>')
+def get(id: int):
     return controller.get(id)
 
 
-@app.post('/users')
+@app.post(PATH)
 def store():
     return controller.store()
 
 
-@app.put('/users/<int:id>')
-def update(id):
+@app.put(PATH+'/<int:id>')
+def update(id: int):
     return controller.update(id)
 
 
-@app.delete('/users/<int:id>')
-def delete(id):
+@app.delete(PATH+'/<int:id>')
+def delete(id: int):
     return controller.delete(id)

@@ -9,7 +9,7 @@ class __UserService(AbstractService):
     def _get_repository(self):
         return userRepository
 
-    def get_by_username(self, username: str):
+    def get_by_username(self, username: str) -> User:
         for user in self.get_list():
             if user.username == username:
                 return user
