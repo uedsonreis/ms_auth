@@ -51,6 +51,8 @@ class AbstractController(ABC):
 
         if self._valid_to_create(body):
             record = self._from_json(body)
+            record.modifier_user = request.logged.username
+
             if record is not None:
                 record_db = self._get_service().create(record)
 
@@ -64,6 +66,7 @@ class AbstractController(ABC):
 
     def update(self, id: int):
         record = self._from_json(request.get_json())
+        record.modifier_user = request.logged.username
         record_db = self._get_service().update(id, record)
 
         if record_db is None:

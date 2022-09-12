@@ -1,3 +1,6 @@
+from flask import request
+
+from api.controller.auth_controller import authentication_required
 from api.dto.user_dto import UserDTO
 from settings import app
 from model.entities.user import User
@@ -31,25 +34,30 @@ controller = UserController()
 
 
 @app.get(PATH)
+@authentication_required
 def index_users():
     return controller.index()
 
 
 @app.get(PATH+'/<int:id>')
+@authentication_required
 def get_user(id: int):
     return controller.get(id)
 
 
 @app.post(PATH)
+@authentication_required
 def store_user():
     return controller.store()
 
 
 @app.put(PATH+'/<int:id>')
+@authentication_required
 def update_user(id: int):
     return controller.update(id)
 
 
 @app.delete(PATH+'/<int:id>')
+@authentication_required
 def delete_user(id: int):
     return controller.delete(id)

@@ -1,3 +1,4 @@
+from model.entities.role import Role
 from settings import db
 from sqlalchemy.sql import func
 
@@ -24,7 +25,7 @@ class User(db.Model, object):
     name: str = db.Column(db.String(100), nullable=False)
     admin: bool = db.Column(db.Boolean(), nullable=False, default=False)
 
-    roles = db.relationship("Role", secondary=user_role)
+    roles: list[Role] = db.relationship("Role", secondary=user_role)
 
     def __init__(self, id, name, username, password):
         self.id = id

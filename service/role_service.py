@@ -14,10 +14,7 @@ class __RoleService(AbstractService):
         record_db.description = new_record.description
 
     def get_by_name(self, name: str) -> Role:
-        for role in self.get_list():
-            if role.name == name:
-                return role
-        return None
+        return roleRepository.get_by_name(name)
 
     def _contains(self, record):
         role_db = self.get_by_name(record.name)

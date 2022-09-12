@@ -32,7 +32,13 @@ class AbstractService(ABC):
 
     def update(self, id: int, new_record):
         record_db = self.get_by_id(id)
+
+        if record_db is None:
+            return None
+
         self._map_to_update(new_record, record_db)
+        record_db.modifier_user = new_record.modifier_user
+
         return self._get_repository().save(record_db)
 
     def delete(self, id: int):

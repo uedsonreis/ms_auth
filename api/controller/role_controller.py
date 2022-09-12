@@ -1,3 +1,4 @@
+from api.controller.auth_controller import authentication_required
 from api.dto.role_dto import RoleDTO
 from settings import app
 from model.entities.role import Role
@@ -30,25 +31,30 @@ controller = RoleController()
 
 
 @app.get(PATH)
+@authentication_required
 def index_roles():
     return controller.index()
 
 
 @app.get(PATH+'/<int:id>')
+@authentication_required
 def get_role(id: int):
     return controller.get(id)
 
 
 @app.post(PATH)
+@authentication_required
 def store_role():
     return controller.store()
 
 
 @app.put(PATH+'/<int:id>')
+@authentication_required
 def update_role(id: int):
     return controller.update(id)
 
 
 @app.delete(PATH+'/<int:id>')
+@authentication_required
 def delete_role(id: int):
     return controller.delete(id)

@@ -11,10 +11,7 @@ class __UserService(AbstractService):
         return userRepository
 
     def get_by_username(self, username: str) -> User:
-        for user in self.get_list():
-            if user.username == username:
-                return user
-        return None
+        return userRepository.get_by_username(username)
 
     def _contains(self, record):
         user_db = self.get_by_username(record.username)

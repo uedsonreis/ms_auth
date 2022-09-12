@@ -7,14 +7,8 @@ class __UserRepository(AbstractRepository):
     def get_model(self) -> db.Model:
         return User
 
-    def get_roles(self, id: int):
-        pass
-
-    def save_roles(self, id: int, role):
-        user: User = self.get(id)
-
-        user.roles.insert(len(user.roles), role)
-        db.session.commit()
+    def get_by_username(self, _username: str):
+        return self.get_model().query.filter_by(username=_username).first()
 
 
 userRepository = __UserRepository()
