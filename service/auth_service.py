@@ -1,8 +1,8 @@
 from service.user_service import userService
-import datetime
+from datetime import datetime
 import jwt
 
-from util.date_util import get_timestamp
+from util import date_util
 
 
 # noinspection PyMethodMayBeStatic
@@ -17,8 +17,8 @@ class __AuthService:
         user = self.get_user_service().get_by_username(username)
         if user.password == password and user.valid:
 
-            date = datetime.datetime.now()
-            expires_on = datetime.datetime(date.year, date.month, date.day + 1)
+            date = datetime.now()
+            expires_on = datetime(date.year, date.month, date.day + 1)
 
             roles = []
 
@@ -30,8 +30,8 @@ class __AuthService:
                 'name': user.name,
                 'nickname': user.username,
                 'roles': roles,
-                'iat': get_timestamp(date),
-                'exp': get_timestamp(expires_on)
+                'iat': date_util.get_timestamp(date),
+                'exp': date_util.get_timestamp(expires_on)
             }
 
             return jwt.encode(payload, key=self.secret, algorithm='HS256')

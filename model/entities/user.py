@@ -1,6 +1,12 @@
-from sqlalchemy.inspection import inspect
 from settings import db
 from sqlalchemy.sql import func
+
+
+user_role = db.Table(
+    "users_roles", db.metadata,
+    db.Column('user_id', db.ForeignKey('users.id'), primary_key=True),
+    db.Column('role_id', db.ForeignKey('roles.id'), primary_key=True)
+)
 
 
 class User(db.Model, object):
@@ -18,6 +24,8 @@ class User(db.Model, object):
     name: str = db.Column(db.String(100), nullable=False)
     admin: bool = db.Column(db.Boolean(), nullable=False, default=False)
 
+    roles = db.relationship("Role", secondary=user_role)
+
     def __init__(self, id, name, username, password):
         self.id = id
         self.valid = True
@@ -25,8 +33,3 @@ class User(db.Model, object):
         self.username = username
         self.password = password
         self.admin = False
-
-    def serialize(self):
-        obj = {c: getattr(self, c) for c in inspect(self).attrs.keys()}
-        del obj['password']
-        return obj

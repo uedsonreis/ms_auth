@@ -1,6 +1,7 @@
 from model.entities.user import User
 from repository.user_repository import userRepository
 from service.abstract_service import AbstractService
+from service.role_service import roleService
 
 
 # noinspection PyMethodMayBeStatic
@@ -21,6 +22,10 @@ class __UserService(AbstractService):
 
     def _map_to_update(self, new_record: User, record_db: User):
         record_db.name = new_record.name
+
+    def add_role(self, id_user: int, id_rule: int):
+        role_db = roleService.get_by_id(id_rule)
+        userRepository.save_roles(id_user, role_db)
 
 
 userService = __UserService()

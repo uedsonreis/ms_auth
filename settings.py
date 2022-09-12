@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cli import FlaskCLI
-from flask_migrate import Migrate, command
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 
