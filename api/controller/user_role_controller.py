@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, Response
 
 from api.dto.role_dto import RoleDTO
 from settings import app
@@ -21,10 +21,10 @@ class UserRoleController:
 
         if "id" in role:
             if UserRoleService.add_role_by_id(user_id, role['id']):
-                return AbstractController.get_response(204, "")
+                return Response(None, 204)
 
         if "name" in role:
             if UserRoleService.add_role_by_name(user_id, role['name']):
-                return AbstractController.get_response(204, "")
+                return Response(None, 204)
 
-        return AbstractController.get_response(400, "Data to create the Record is not valid!")
+        return "Data to create the Record is not valid!", 400

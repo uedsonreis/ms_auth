@@ -1,10 +1,8 @@
-from flask import request
-
-from api.controller.auth_controller import authentication_required
-from api.dto.user_dto import UserDTO
 from settings import app
+from api.dto.user_dto import UserDTO
 from model.entities.user import User
 from service.user_service import userService
+from api.controller.auth_controller import authentication_required
 from api.controller.abstract_controller import AbstractController
 
 

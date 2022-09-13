@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from datetime import datetime
 from settings import db
 
 
@@ -23,6 +24,8 @@ class AbstractRepository(ABC):
             db.session.add(record)
             db.session.commit()
             return record
+        else:
+            record.modified = datetime.now()
 
         db.session.commit()
         return record

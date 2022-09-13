@@ -1,4 +1,3 @@
-import json
 from abc import ABC, abstractmethod
 from flask import jsonify, request, Response
 
@@ -27,24 +26,20 @@ class AbstractController(ABC):
     def parser_to_dto(self, obj) -> AbstractDTO:
         pass
 
-    @staticmethod
-    def get_response(http_code: int, message: str):
-        return Response(message, http_code, mimetype="application/json")
-
     def serialize_list(self, list):
         return [self.parser_to_dto(e).__dict__ for e in list]
 
     def index(self):
         list = self.serialize_list(self._get_service().get_list())
-        return AbstractController.get_response(200, json.dumps(list))
+        return jsonify(list), 200
 
     def get(self, id: int):
         record = self._get_service().get_by_id(id)
         if record is None:
-            return AbstractController.get_response(204, None)
+            return Response(None, 204)
         else:
             dto = self.parser_to_dto(record)
-            return AbstractController.get_response(200, json.dumps(dto.__dict__))
+            return jsonify(dto.__dict__), 200
 
     def store(self):
         body = request.get_json()
@@ -57,12 +52,12 @@ class AbstractController(ABC):
                 record_db = self._get_service().create(record)
 
                 if record_db is None:
-                    return AbstractController.get_response(400, "Record already exists!")
+                    return Response("Record already exists!", 400)
                 else:
                     dto = self.parser_to_dto(record_db)
-                    return AbstractController.get_response(201, json.dumps(dto.__dict__))
+                    return jsonify(dto.__dict__), 201
 
-        return AbstractController.get_response(400, "Data to create the Record is not valid!")
+        return "Data to create the Record is not valid!", 400
 
     def update(self, id: int):
         record = self._from_json(request.get_json())
@@ -70,14 +65,14 @@ class AbstractController(ABC):
         record_db = self._get_service().update(id, record)
 
         if record_db is None:
-            return AbstractController.get_response(400, "Record ID does not exist!")
+            return "Record ID does not exist", 400
         else:
             dto = self.parser_to_dto(record_db)
-            return AbstractController.get_response(200, json.dumps(dto.__dict__))
+            return jsonify(dto.__dict__)
 
     def delete(self, id: int):
         is_deleted = self._get_service().delete(id)
         if is_deleted:
-            return AbstractController.get_response(204, None)
+            return Response(None, 204)
         else:
-            return AbstractController.get_response(400, "Record ID does not exist!")
+            return "Record ID does not exist!", 400

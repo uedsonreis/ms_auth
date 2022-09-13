@@ -1,10 +1,8 @@
 from functools import wraps
-
-from flask import request, Response, jsonify
+from flask import request, jsonify
 
 from settings import app
 from service.auth_service import authService
-from api.controller.abstract_controller import AbstractController
 
 
 def authentication_required(f):
