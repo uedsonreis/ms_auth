@@ -12,8 +12,14 @@ class UserController(AbstractController):
     def _get_service(self):
         return userService
 
-    def _valid_to_create(self, json) -> bool:
-        return "name" in json and "username" in json and "password" in json
+    def _valid_to_create(self, json) -> str:
+        if "name" not in json:
+            return "NAME is required"
+        if "username" not in json:
+            return "USERNAME is required"
+        if "password" not in json:
+            return "PASSWORD is required"
+        return None
 
     def _from_json(self, json):
         return User(
@@ -44,7 +50,6 @@ def get_user(id: int):
 
 
 @app.post(PATH)
-@authentication_required
 def store_user():
     return controller.store()
 

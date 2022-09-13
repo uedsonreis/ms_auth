@@ -1,5 +1,6 @@
 from datetime import datetime
 
+import bcrypt
 from lib_ms_api.abstract_service import generate_jwt_token
 
 from util import date_util
@@ -16,9 +17,8 @@ class __AuthService:
         return userService
 
     def login(self, username: str, password: str, secret: str, algorithm: str):
-        user = self.get_user_service().get_by_username(username)
-        if user is not None and user.password == password and user.valid:
-
+        user = self.get_user_service().login(username, password)
+        if user is not None:
             roles = UserRoleService.get_roles(user.id)
 
             date = datetime.now()
@@ -33,7 +33,7 @@ class __AuthService:
                 'exp': date_util.get_timestamp(expires_on)
             }
 
-            return generate_jwt_token(payload, secret, algorithm)
+            return {'token': generate_jwt_token(payload, secret, algorithm)}
         else:
             return None
 

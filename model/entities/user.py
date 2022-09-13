@@ -21,7 +21,7 @@ class User(db.Model, object):
     valid: bool = db.Column(db.Boolean(), nullable=False, default=True)
 
     username: str = db.Column(db.String(100), unique=True, nullable=False)
-    password: str = db.Column(db.String(20))
+    password: str = db.Column(db.String(150))
     name: str = db.Column(db.String(100), nullable=False)
     admin: bool = db.Column(db.Boolean(), nullable=False, default=False)
 

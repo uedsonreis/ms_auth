@@ -12,8 +12,10 @@ class RoleController(AbstractController):
     def _get_service(self):
         return roleService
 
-    def _valid_to_create(self, json) -> bool:
-        return "name" in json
+    def _valid_to_create(self, json) -> str:
+        if "name" not in json:
+            return "NAME is required"
+        return None
 
     def _from_json(self, json):
         return Role(
