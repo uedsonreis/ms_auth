@@ -1,6 +1,7 @@
+from lib_ms_api.abstract_service import AbstractService
+
 from model.entities.role import Role
 from repository.role_repository import roleRepository
-from service.abstract_service import AbstractService
 
 
 # noinspection PyMethodMayBeStatic

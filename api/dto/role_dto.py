@@ -1,4 +1,5 @@
-from api.dto.abstract_dto import AbstractDTO
+from lib_ms_api.abstract_dto import AbstractDTO
+
 from model.entities.role import Role
 
 

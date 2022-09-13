@@ -1,18 +1,6 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_cli import FlaskCLI
-from flask_migrate import Migrate
+from lib_ms_api.settings import setup_app
 
-app = Flask(__name__)
+[app, db] = setup_app('postgresql://postgres:reis@localhost:5432/ms_auth', True, True)
 
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:reis@localhost:5432/ms_auth'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-app.config['DEBUG'] = True
-
-
-db = SQLAlchemy(app)
-
-
-migrate = Migrate(app, db)
-FlaskCLI(app)
+app.config['SECRET_KEY'] = 'secretProfReisClass'
+app.config['ALGORITHM'] = 'HS256'

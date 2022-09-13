@@ -1,9 +1,9 @@
-from api.controller.auth_controller import authentication_required
+from lib_ms_api.abstract_controller import AbstractController, authentication_required
+
 from api.dto.role_dto import RoleDTO
 from settings import app
 from model.entities.role import Role
 from service.role_service import roleService
-from api.controller.abstract_controller import AbstractController
 
 
 # noinspection PyMethodMayBeStatic
