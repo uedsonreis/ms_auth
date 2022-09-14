@@ -1,6 +1,5 @@
 from datetime import datetime
 
-import bcrypt
 from lib_ms_api.abstract_service import generate_jwt_token
 
 from util import date_util
@@ -36,11 +35,6 @@ class __AuthService:
             return {'token': generate_jwt_token(payload, secret, algorithm)}
         else:
             return None
-
-    def parser_payload(self, payload):
-        user = User(payload['sub'], payload['name'], payload['nickname'], None)
-        user.roles = [Role(None, role, None) for role in payload['roles']]
-        return user
 
 
 authService = __AuthService()

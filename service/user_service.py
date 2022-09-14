@@ -1,4 +1,5 @@
 import bcrypt
+from flask import abort, Response
 from lib_ms_api.abstract_service import AbstractService
 
 from model.entities.user import User
@@ -7,6 +8,7 @@ from repository.user_repository import userRepository
 
 SALT = 10
 UTF8 = 'utf-8'
+
 
 # noinspection PyMethodMayBeStatic
 class __UserService(AbstractService):
@@ -22,7 +24,10 @@ class __UserService(AbstractService):
         return False if user_db is None else True
 
     def _map_to_update(self, new_record: User, record_db: User):
-        record_db.name = new_record.name
+        if new_record.modifier_user == record_db.username:
+            record_db.name = new_record.name
+        else:
+            abort(Response("Permission denied", 403))
 
     def create(self, record: User):
         if self._contains(record):

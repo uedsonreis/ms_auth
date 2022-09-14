@@ -1,3 +1,4 @@
+from flask import Response, request, jsonify
 from lib_ms_api.abstract_controller import AbstractController, authentication_required
 
 from settings import app
@@ -31,6 +32,18 @@ class UserController(AbstractController):
 
     def parser_to_dto(self, obj: User):
         return UserDTO.obj_to_dto(obj)
+
+    def delete(self, id: int):
+        logged: User = self._get_service().get_by_id(request.logged['sub'])
+        if logged is not None and (logged.admin or logged.id == id):
+
+            is_deleted = self._get_service().delete(id)
+            if is_deleted:
+                return Response(None, 204)
+            else:
+                return "Record ID does not exist!", 400
+
+        return "Permission denied", 403
 
 
 PATH = '/users'
