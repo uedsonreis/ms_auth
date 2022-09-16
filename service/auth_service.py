@@ -3,8 +3,6 @@ from datetime import datetime
 from lib_ms_api.abstract_service import generate_jwt_token
 
 from util import date_util
-from model.entities.role import Role
-from model.entities.user import User
 from service.user_service import userService
 from service.user_role_service import UserRoleService
 

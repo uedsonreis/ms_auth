@@ -1,4 +1,4 @@
-from flask import Response, request, jsonify
+from flask import Response, request
 from lib_ms_api.abstract_controller import AbstractController, authentication_required
 
 from settings import app
