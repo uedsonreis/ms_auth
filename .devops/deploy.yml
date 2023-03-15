@@ -18,7 +18,7 @@ spec:
         image: ms-auth:v1.0.0
         env:
           - name: DATABASE_URL
-            value: "192.168.0.42"
+            value: "192.168.0.7"
         ports:
           - containerPort: 5000
       restartPolicy: Always
